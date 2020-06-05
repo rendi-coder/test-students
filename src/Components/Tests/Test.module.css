@@ -1,0 +1,23 @@
+.test{
+    font-size: 3rem;
+    color:#a5d6a7;
+    cursor: pointer;
+}
+
+.test:hover{
+    background-color:#eeff41;
+    color:rebeccapurple;
+}
+
+.selectI{
+    background-color:lightblue;
+    color:black;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.selectI:hover{
+    background-color:white;
+    color:rebeccapurple;
+}
+
