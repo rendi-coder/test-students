@@ -53,14 +53,29 @@ class Test extends React.Component{
             return <div className="container" style={{marginTop:'3rem'}}>
                <h3>Список здавших тест по <span style={{color:'green'}}>{this.props.nameTest}</span></h3>
                <hr></hr>
-               <ul>
+               <table>
+                <thead>
+                    <tr>
+                        <td>№</td>
+                        <td>Почта</td>
+                        <td>ФИО</td>
+                        <td>Группа</td>
+                        <td>Бал</td>
+                    </tr>
+                </thead>
+                <tbody>
                 {this.props.adminPanel.length>0 ? this.props.adminPanel
                 .map((e,i)=>{
-                  return <li key={i}>
-                        <h5>{i+1}. {e.student} Рейтинг: {e.rating}</h5>
-                    </li>
-                }):<><h5>{this.props.nameTest} пока не кто не здавал</h5></>}
-                </ul>
+                  return <tr key={i}>
+                        <td>{i+1}.</td>
+                        <td>{e.student.login}</td>
+                        <td>{e.student.fio}</td> 
+                        <td>{e.student.group}</td>
+                        <td>{e.rating}</td>
+                    </tr>
+                }):null}
+                </tbody>
+                </table>
                 
               
                 </div>

@@ -1,13 +1,14 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
-import {logout} from '../../redux/authReducer'
+import {logout,clearGroupFio} from '../../redux/authReducer'
 
 
 
 class Logout extends Component{
     componentDidMount(){
         this.props.logout()
+        this.props.clearGroupFio()
     }
 
     render() {
@@ -17,4 +18,4 @@ class Logout extends Component{
 
  
 
-export default connect(null,{logout}) (Logout)
+export default connect(null,{logout,clearGroupFio}) (Logout)

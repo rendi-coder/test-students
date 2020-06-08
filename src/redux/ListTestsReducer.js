@@ -61,12 +61,11 @@ export const getTests=()=>async(dispatch,getState)=>{
     for (const key in response.data) {
         const length= response.data[key].length
         for(let i=0;i<length;i++){
-      const candidate=response.data[key][i].findIndex(e=>e.student===student)
+      const candidate=response.data[key].findIndex(e=>e.student.login===student)
        if(candidate>=0){
            mcompleted.push(key)
        }
       }
-      dispatch(setLoading(false))
     }
     
     const listTest=[]
@@ -86,6 +85,7 @@ export const getTests=()=>async(dispatch,getState)=>{
 
     dispatch({type:GET_ALL_TESTS,payload:listTest})
     dispatch({type:COMLETED_TESTS,payload:listCompleted})
+    dispatch(setLoading(false))
 }
 
 export const getTestById=(id)=>async(dispatch)=>{
@@ -115,13 +115,18 @@ export const completedTest=(dataTest)=>async(dispatch,getState)=>{
             rating++
         }
     });
-    const student = getState().auth.login;
+    
+    let {fio,group,login} = getState().auth;
+    const student={
+        login,group,fio
+    }
+    console.log(student)
     const Allusers = await Axios.get(`https://testsstudents.firebaseio.com/TestsUsers/${id}/.json`)
     let length=0;
     if(Allusers.data){
         length = Allusers.data.length
     }
-    await Axios.put(`https://testsstudents.firebaseio.com/TestsUsers/${id}/${length}/.json`,[{student,rating}])
+    await Axios.put(`https://testsstudents.firebaseio.com/TestsUsers/${id}/${length}/.json`,{student,rating})
     dispatch(setLoading('redirect'))
     dispatch({type:SET_TEST_BY_ID,payload:{}}) //обновляю выбранный тест
 }
@@ -133,9 +138,10 @@ export const getTestStudentById=(id)=>async(dispatch,getState)=>{
        let data=[];
        if(response.data){
         response.data.forEach(e=>{
-            data.push(e[0])
+            data.push(e)
         })
         }
+    
       dispatch({type:ADMIN_PANEL,payload:{data,nameTest}})
       dispatch(setLoading(false))
 }
